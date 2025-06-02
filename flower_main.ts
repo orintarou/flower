@@ -5,7 +5,7 @@ import axios from 'axios';
 const rl: any = readline.createInterface({input, output});
 const APITOKEN: string = "<hidden>";
 
-let color = await rl.question("\nEnter the color you'd like to check out!\n");
+let color: string = await rl.question("\nEnter the color you'd like to check out!\n");
 
 rl.close();
 
