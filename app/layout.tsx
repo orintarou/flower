@@ -7,7 +7,7 @@ export default function RootLayout({
 		<html>
 			<body>
 				<div className="top-nav">
-					<p>> Flower</p>
+					<p>Flower</p>
 				</div>
 				{children}
 			</body>
