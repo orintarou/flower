@@ -1,1 +1,75 @@
 @import "tailwindcss";
+
+
+/*body{
+	position:fixed;
+}
+*/
+/*#search{
+	margin-top:40vh;
+}*/
+
+#card{
+	position: relative;
+	display:flex;
+}
+
+#search{
+	position:relative;
+	margin-top: 10vh;
+	margin-bottom: 20vh;
+}
+
+#dropdown{
+	position:absolute;
+	width: 60vw;
+	left: 20vw;
+	text-align: left;
+}
+
+.dropdown-item{
+	border: 2px dotted black;
+	margin: 2px;
+}
+
+.dropdown-item:hover{
+	background-color: lightcoral;
+}
+
+#search-input{
+	width: 60vw;
+	height: 5vh;
+	border: 2px solid gray;
+	text-align: center;
+	color: gray;
+	display: block;
+	margin: 0 auto;
+}
+
+/*change based on input color*/
+
+#results{
+	display:inline-flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	min-width: 50vw;
+	justify-content: center;
+}
+
+#results-image{
+	opacity: .2;
+	margin: 5px;
+	width: 12vw;
+}
+
+#results-image:hover{
+	opacity: 1;
+}
+
+#results-image-text {
+	font-size: calc(4px + 1vw);
+	position: absolute;
+  	top: 0%;
+  	left: 35%;
+  	opacity: .5;
+}
