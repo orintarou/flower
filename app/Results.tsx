@@ -1,33 +1,42 @@
 import React, {Component} from 'react';
 import Card from './Card.tsx';
 
-//import Card from '@mui/material/Card';
-//import CardContent from '@mui/material/CardContent';
+function isMatch(input, color){
+	if(input === ""){
+		return true;
+	}
 
+	let myColorBreakdown = {};
+	//green
+	let myBuilder = "";
+	for(var i in color.split("")){
+		myBuilder = myBuilder.concat(color.split("")[i]);
+		myColorBreakdown[myBuilder] = 1;
+	}
 
-
-function getColor(num){
-	return (num % 2 === 0) ? "green" : 
-		(num % 3 === 0) ? "purple" :
-		(num % 4 === 0) ? "blue" :
-		"yellow";
+	return (input in myColorBreakdown);
 }
 
 export default class Results extends Component {
+	constructor(props){
+		super(props);
+	}
+
 	render(){
-		let images = [];
-		for(var i=1; i<19; i++){
-			images.push({
-				"url": i,
-				"color": getColor(i)
-			});
+		let searchResults = []
+		for(var i in this.props.initialImages){
+			if(isMatch(this.props.searchValue, this.props.initialImages[i].color)){
+				searchResults.push(this.props.initialImages[i]);
+			}
 		}
 
 		return (
 			<div id="results">
 				{
-					images.map((image) => {
-						return <Card key={image.url} image={image}/>
+					searchResults.map((image, index) => {
+						return (
+							<Card key={image.url} index={index+1} image={image}/>
+						)
 					})
 				}
 			</div>

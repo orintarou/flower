@@ -10,4 +10,5 @@ let myImageURLS = [];
 for (var i in myPlants.data.data) {
     myImageURLS.push(myPlants.data.data[i].image_url);
 }
+
 console.log(myImageURLS);

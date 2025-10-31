@@ -12,23 +12,27 @@ export default class Search extends Component {
 		super(props);
 
 		this.state = {
-			inputValue: ""
+			inputValue: "",
+			placeholder: "green"
 		}
 		
 		this.handleChange = this.handleChange.bind(this);
 	}
 
-	handleChange(){
+	handleChange(value, source){
+		let newInput = (source === 'input') ? event.target.value : value;
 		this.setState({
-			inputValue: document.getElementById("search-input").value.toLowerCase(),
+			inputValue: (source === 'dropdown') ? "" : newInput,
+			placeholder: "next color"
 		})
+		this.props.changeSearchValue(newInput);
 	}
 
 	render(){
 		return (
 				<div id="search">
-					<input onChange={this.handleChange} autoComplete="off" id="search-input" type="text" placeholder="magenta" value={this.state.inputValue}/>
-					<Dropdown inputValue={this.state.inputValue}/>
+					<input onChange={() => this.handleChange("", "input")} autoComplete="off" id="search-input" type="text" placeholder={this.state.placeholder} value={this.state.inputValue}/>
+					<Dropdown onClick={this.handleChange} inputValue={this.state.inputValue}/>
 				</div>
 			)
 	}
