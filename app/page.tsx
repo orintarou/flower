@@ -4,98 +4,84 @@ import React, {Component} from 'react';
 import Search from './Search.tsx';
 import Results from './Results.tsx';
 import ToggleButton from '@mui/material/ToggleButton';
-import './globals.css';
+import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
 
-let colors = {
-	'green': 15, 
-	'gray': 25, 
-	'red': 8, 
-	'blue': 12, 
-	'purple': 30,
-	'brown': 23,
-	'white': 15,
-	'black': 4,
-	'orange': 54
-};
+
+import axios from 'axios';
+import * as data from './new_data.json';
+
+import './globals.css';
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
-function getColor(i){
-	if(i === 0) {
-		return Object.keys(colors)[1];
-	}
-	if(i === 1) {
-		return Object.keys(colors)[1];
-	}
-	if(i === 2) {
-		return Object.keys(colors)[0];
-	}
-	if(i === 3) {
-		return Object.keys(colors)[0];
-	}
-	if(i === 4) {
-		return Object.keys(colors)[4];
-	}
-	if(i === 5) {
-		return Object.keys(colors)[0];
-	}
-	if(i === 6) {
-		return Object.keys(colors)[6];
-	}
-	if(i === 7) {
-		return Object.keys(colors)[7];
-	}
-	if(i === 8) {
-		return Object.keys(colors)[8];
-	}
-	if(i === 9) {
-		return Object.keys(colors)[4];
-	}
-	if(i === 10) {
-		return Object.keys(colors)[8];
-	}
-	if(i === 11) {
-		return Object.keys(colors)[7];
-	}
-	if(i === 12) {
-		return Object.keys(colors)[1];
-	}
-	if(i === 13) {
-		return Object.keys(colors)[1];
-	}
-	if(i === 14) {
-		return Object.keys(colors)[2];
-	}
-	if(i === 15) {
-		return Object.keys(colors)[0];
-	}
-	if(i === 16) {
-		return Object.keys(colors)[1];
-	}
+let colors = {
+	"white": 1,
+	"red": 1,
+	"pink": 1,
+	"yellow": 1,
+	"purple": 1,
+	"blue": 1,
+	"orange": 1,
+	"green": 1,
+	"gray": 1,
+	"brown": 1,
 }
 
-function formImages() {
-	let images = [];
-	for(var i=1; i<17; i++){
-		images.push({
-			"url": i,
-			"color": getColor(i)
-		});
+function shuffleArray(arr){
+	let myNumbers = {};
+	let result = [];
+
+	for(var i=0; i<arr.length; i++){
+		let randomInt = getRandomInt(arr.length);
+		while(randomInt in myNumbers){
+			randomInt = getRandomInt(arr.length);
+		}
+		myNumbers[randomInt] = 1;
+		result.push(arr[randomInt]);
 	}
-	return images;
+
+	return result;
 }
 
 class Page extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			initialImages: formImages(),
+			initialImages: [],
 			searchValue: ""
 		};
 
 		this.changeSearchValue = this.changeSearchValue.bind(this);
+	}
+
+	async componentDidMount(){
+			let allFlowers = {};
+			let initialImages = [];
+
+			for(var i in Object.keys(colors)){
+				let color = Object.keys(colors)[i];
+
+				let partialFlowers = await axios.get("https://flower-be.onrender.com/api/plants?color=" + color);
+				allFlowers[color] = partialFlowers;
+			}
+
+			for(var i in allFlowers){
+				for(var j in allFlowers[i].data){
+					initialImages.push({
+						"key": allFlowers[i].data[j].id,
+						"url": allFlowers[i].data[j].image_url,
+						"color": i,
+						"common_name": allFlowers[i].data[j].common_name,
+						"scientific_name": allFlowers[i].data[j].scientific_name,
+					});
+				}
+			}
+			
+			this.setState({
+				initialImages: shuffleArray(initialImages)
+			})
 	}
 
 	changeSearchValue(input){
@@ -108,9 +94,15 @@ class Page extends Component{
 	render(){
 		return (
 			<div>
-				<ToggleButton className="fixed! top-0 right-0">O/I</ToggleButton>
-				<Search changeSearchValue={this.changeSearchValue}/>
-				<Results initialImages={this.state.initialImages} searchValue={this.state.searchValue} />
+				<div id="landing-content">
+					<ToggleButton className="fixed! top-0 right-0">O/I</ToggleButton>
+					<Search changeSearchValue={this.changeSearchValue}/>
+					<Results initialImages={this.state.initialImages} searchValue={this.state.searchValue} />
+				</div>
+				<div id="loading" className="fixed">
+					<LocalFloristIcon className="absolute opacity-[.7] left-[calc(50%-20px)] top-[calc(20%-20px)]"/>
+					<span className="absolute opacity-[.7] text-xs left-[calc(50%-110px)] top-[calc(22%)]">April showers bringing in May flowers...</span>
+				</div>
 			</div>
 		)
 	}

@@ -2,14 +2,8 @@
 
 
 body{
-	position:fixed;
+	position:absolute;
 }
-
-
-
-/*#search{
-	margin-top:40vh;
-}*/
 
 .card{
 	position: relative;
@@ -64,11 +58,17 @@ body{
 	flex-wrap: wrap;
 	min-width: 50vw;
 	margin-left: 5vw;
+	justify-content: center;
 }
 
 .toggle{
 	position:fixed;
 	right:0%;
+}
+
+#loading{
+	width: 100vw;
+	height: 100vh;
 }
 
 #results-image{
@@ -96,7 +96,6 @@ body{
   	opacity: .5;
 }
 
-#card:hover #results-image-click{
-	display: inline;
+.results-image-click:hover{
 	opacity: 1;
 }

@@ -10,7 +10,8 @@ let colors = {
 	'brown': 23,
 	'white': 15,
 	'black': 4,
-	'orange': 54
+	'orange': 54,
+	'yellow': 20,
 };
 
 function isMatch(input, color){

@@ -29,14 +29,16 @@ export default class Results extends Component {
 				searchResults.push(this.props.initialImages[i]);
 			}
 		}
-
+		
 		return (
 			<div id="results">
 				{
 					searchResults.map((image, index) => {
-						return (
-							<Card key={image.url} index={index+1} image={image}/>
-						)
+						if(image.url !== null){
+							return (
+								<Card key={index} index={index+1} image={image}/>
+							)
+						}
 					})
 				}
 			</div>

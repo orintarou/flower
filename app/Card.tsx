@@ -17,13 +17,19 @@ export default class Card extends Component {
 		document.getElementById(this.props.index).style.cursor = "pointer";
 	}
 
+	navigateFlower(name){
+		document.getElementById("landing-content").style.display = 'none';
+		document.getElementById("loading").style.display = "block";
+		window.location = "/plant/" + name.replace("%20", '_');
+	}
+
 	render(){
 		return(
 			<div className="card" onMouseOver={this.handleHover}>
-				<img id="results-image" className="border-[1px]" src={'./images/' + this.props.image.url + '.png'}/>
+				<img id="results-image" className="border-[1px]" src={this.props.image.url}/>
 				<h2 id="results-image-color" className="text-black border-[1px] bg-white w-fit-content p-1" style={{borderColor: this.props.image.color}}>{this.props.image.color}</h2>
-				<Badge id={this.props.index} className="results-image-click" color="primary" >
-					<AspectRatioIcon/>
+				<Badge id={this.props.index} className="results-image-click" >
+					<AspectRatioIcon onClick={() => this.navigateFlower(this.props.image.common_name)}/>
 				</Badge>
 			</div>
 		)
