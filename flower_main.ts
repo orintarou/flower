@@ -3,7 +3,7 @@ import {stdin as input, stdout as output} from 'process';
 import axios from 'axios';
 
 const rl: any = readline.createInterface({input, output});
-const APITOKEN: string = "<hidden>";
+const APITOKEN: string = "usr-L1XUm4r1FdoAWKmTsH2fqaxjZ-7Al3py4KUHeLDR6YU";
 
 let color: string = await rl.question("\nEnter the color you'd like to check out!\n");
 

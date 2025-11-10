@@ -1,24 +1,58 @@
 'use client'
 
 import React, {Component} from 'react';
+import Search from './Search.tsx';
+import Results from './Results.tsx';
+import ToggleButton from '@mui/material/ToggleButton';
+import LocalFloristIcon from '@mui/icons-material/LocalFlorist';
+import AppBar from '@mui/material/AppBar';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Badge from '@mui/material/Badge';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import AddchartIcon from '@mui/icons-material/Addchart';
+import BubbleChartIcon from '@mui/icons-material/BubbleChart';
 
-let myColors = {
-	"green": 1, 
-	"blue": 1, 
-	"yellow": 1, 
-	"red": 1, 
-	"orange": 1
+import axios from 'axios';
+import * as data from './new_data.json';
+
+import './globals.css';
+import { init } from 'next/dist/compiled/webpack/webpack';
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
 }
 
-let closeTo = function(s){
-	let result = [];
-	let myKeys = Object.keys(myColors);
+let colors = {
+	"white": 1,
+	'green': 1, 
+	'gray': 1, 
+	'red': 1, 
+	'blue': 1, 
+	'purple': 1,
+	'brown': 1,
+	'black': 1,
+	'orange': 1,
+}
 
-	for(var i in myKeys){
-		if(s.substring(0,2) === myKeys[i].substring(0,2)){
-			result[0] = true;
-			result[1] = myKeys[i];
+const icons = ['add a photo', 'add a comment', 'view statistics', 'view charts', 'inbox', 'notifications']; 
+
+function shuffleArray(arr){
+	let myNumbers = {};
+	let result = [];
+
+	for(var i=0; i<arr.length; i++){
+		let randomInt = getRandomInt(arr.length);
+		while(randomInt in myNumbers){
+			randomInt = getRandomInt(arr.length);
 		}
+		myNumbers[randomInt] = 1;
+		result.push(arr[randomInt]);
 	}
 
 	return result;
@@ -28,29 +62,72 @@ class Page extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			mid_type: "red",
-			final_color: "red"
-		}
-		this.handleChange = this.handleChange.bind(this);
+			initialImages: [],
+			searchValue: "",
+			colorCount: {},
+		};
+
+		this.changeSearchValue = this.changeSearchValue.bind(this);
 	}
 
-	handleChange(e){
-		e.preventDefault();
-		if(myColors[e.target.value] === 1){
+	async componentDidMount(){
+			let allFlowers = {};
+			let initialImages = [];
+			let colorCount = {};
 
-		}
+			for(var i in Object.keys(colors)){
+				let color = Object.keys(colors)[i];
+				let partialFlowers = await axios.get("https://flower-be.onrender.com/api/plants?color=" + color);
+				allFlowers[color] = partialFlowers;
+			}
+
+			for(var i in allFlowers){
+				for(var j in allFlowers[i].data){
+					if(allFlowers[i].data[j].image_url !== null && allFlowers[i].data[j].common_name !== null){
+						initialImages.push({
+							"key": allFlowers[i].data[j].id,
+							"url": allFlowers[i].data[j].image_url,
+							"color": i,
+							"common_name": allFlowers[i].data[j].common_name,
+							"scientific_name": allFlowers[i].data[j].scientific_name,
+						});
+					}
+				}
+			}
+
+			for(var i in initialImages){
+				if(colorCount[initialImages[i].color] === undefined){
+					colorCount[initialImages[i].color] = 1;
+				}else{
+					colorCount[initialImages[i].color] += 1;
+				}
+			}
+			
+			this.setState({
+				initialImages: shuffleArray(initialImages),
+				colorCount: colorCount,
+			})
+	}
+
+	changeSearchValue(input){
 		this.setState({
-			mid_type: e.target.value,
-			final_color: closeTo(e.target.value)[0] ? closeTo(e.target.value)[1]: this.state.final_color
+			intitialImages: [],
+			searchValue: input,
 		})
 	}
 
 	render(){
 		return (
 			<div>
-				<p>Enter the color you'd like to check out!</p>
-				<input onChange={(event) => this.handleChange(event)} type="text" placeholder="red" value={this.state.choice}/>
-				<p className="pa" style={{color: this.state.final_color}}>{this.state.mid_type}</p>
+				<div id="landing-content">
+					<ToggleButton className="fixed! top-0 right-0">O/I</ToggleButton>
+					<Search changeSearchValue={this.changeSearchValue} colorCount={this.state.colorCount}/>
+					<Results initialImages={this.state.initialImages} searchValue={this.state.searchValue} />
+				</div>
+				<div id="loading" className="fixed">
+					<LocalFloristIcon className="absolute opacity-[.7] left-[calc(50%-20px)] top-[calc(20%-20px)]"/>
+					<span className="absolute opacity-[.7] text-xs left-[calc(50%-110px)] top-[calc(22%)]">April showers bringing in May flowers...</span>
+				</div>
 			</div>
 		)
 	}

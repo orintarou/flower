@@ -5,9 +5,11 @@ export default function RootLayout({
 }) {
 	return (
 		<html>
+			<head>
+				<title>Flower | By Kuma</title>
+			</head>
 			<body>
 				<div className="top-nav">
-					<p>> Flower</p>
 				</div>
 				{children}
 			</body>
