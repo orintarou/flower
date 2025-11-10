@@ -34,7 +34,7 @@ export default class Results extends Component {
 			<div id="results">
 				{
 					searchResults.map((image, index) => {
-						if(image.url !== null){
+						if(image.url !== null && image.common_name !== null){
 							return (
 								<Card key={index} index={index+1} image={image}/>
 							)

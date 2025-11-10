@@ -1,22 +1,20 @@
 import React, {Component} from 'react';
 
-
 let colors = {
-	'green': 15, 
-	'gray': 25, 
-	'red': 8, 
-	'blue': 12, 
-	'purple': 30,
-	'brown': 23,
-	'white': 15,
-	'black': 4,
-	'orange': 54,
-	'yellow': 20,
-};
+		'green': 5, 
+		'gray': 5, 
+		'red': 5, 
+		'blue': 5, 
+		'purple': 5,
+		'brown': 5,
+		'white': 5,
+		'black': 5,
+		'orange': 5,
+}
 
 function isMatch(input, color){
 	let myColorBreakdown = {};
-	//green
+
 	let myBuilder = "";
 	for(var i in color.split("")){
 		myBuilder = myBuilder.concat(color.split("")[i]);
@@ -59,7 +57,7 @@ export default class Dropdown extends Component {
 								<div className={"w-[4%]"} style={{backgroundColor: color}}></div>
 								<div className="p-[.5vh] inline-flex">
 									<div className="text-left">{color}</div>
-									<div className="text-right text-gray-500">{"(" + colors[color] + ")"}</div>
+									<div className="text-right text-gray-500">{"(" + this.props.colorCount[color] + ")"}</div>
 								</div>
 							</div>
 						)

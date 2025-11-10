@@ -3,10 +3,6 @@ import {Component} from 'react';
 
 import Dropdown from './Dropdown.tsx';
 
-function handleChange(){
-
-}
-
 export default class Search extends Component {
 	constructor(props){
 		super(props);
@@ -29,10 +25,11 @@ export default class Search extends Component {
 	}
 
 	render(){
+		console.log(this.props.colorCount);
 		return (
 				<div id="search">
 					<input onChange={() => this.handleChange("", "input")} autoComplete="off" id="search-input" type="text" placeholder={this.state.placeholder} value={this.state.inputValue}/>
-					<Dropdown onClick={this.handleChange} inputValue={this.state.inputValue}/>
+					<Dropdown onClick={this.handleChange} colorCount={this.props.colorCount} inputValue={this.state.inputValue}/>
 				</div>
 			)
 	}

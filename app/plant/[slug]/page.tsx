@@ -29,24 +29,6 @@ import CloseIcon from '@mui/icons-material/Close';
 
 const icons = ['add a photo', 'add a comment']; 
 
-
-// function shuffleArray(arr){
-// 	let myNumbers = {};
-// 	let result = [];
-
-// 	for(var i=0; i<arr.length; i++){
-// 		let randomInt = getRandomInt(arr.length);
-// 		while(randomInt in myNumbers){
-// 			randomInt = getRandomInt(arr.length);
-// 		}
-// 		myNumbers[randomInt] = 1;
-// 		result.push(arr[randomInt]);
-// 	}
-
-// 	return result;
-// }
-
-
 const comments = [
 	{
 		'user': 'kuma', 

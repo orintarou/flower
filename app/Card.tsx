@@ -20,7 +20,7 @@ export default class Card extends Component {
 	navigateFlower(name){
 		document.getElementById("landing-content").style.display = 'none';
 		document.getElementById("loading").style.display = "block";
-		window.location = "/plant/" + name.replace("%20", '_');
+		window.location = "/plant/" + name;
 	}
 
 	render(){
