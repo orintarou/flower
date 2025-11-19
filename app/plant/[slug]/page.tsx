@@ -62,19 +62,21 @@ const comments = [
 		'user': 'kuma',
 		'text': 'Never heard of em'
 	}
-]
+];
 
-const photos = [
-	'../../images/1.png',
-	'../../images/5.png',
-	'../../images/9.png',
-	'../../images/2.png',
-	'../../images/3.png',
-	'../../images/2.png',
-	'../../images/6.png',
-	'../../images/5.png',
-	'../../images/13.png'
-]
+const photos = [];
+
+// const photos = [
+// 	'../../images/1.png',
+// 	'../../images/5.png',
+// 	'../../images/9.png',
+// 	'../../images/2.png',
+// 	'../../images/3.png',
+// 	'../../images/2.png',
+// 	'../../images/6.png',
+// 	'../../images/5.png',
+// 	'../../images/13.png'
+// ]
 
 class Plant extends Component{
 	constructor(props){
@@ -157,9 +159,15 @@ class Plant extends Component{
 		      	<img className="mb-[10px]" style={{borderRadius: '20px', left: `calc(45% - 200px)`, opacity: .8, position: 'absolute', width:"600px", height:"100%"}} src={this.state.flowerData.image_url}></img>
 		      </Box>
 		      <Box>
-		      	<div style={{overflowy: 'scroll', backgroundColor: "lightgray", height:"200px", width:'300px', position: 'absolute', left: `calc(45% + 400px)`}}>
+		      	<div style={{overflowy: 'scroll', height:"100vh", width:'300px', position: 'absolute', left: `calc(45% + 400px)`}}>
 		      		{(this.state.comments.concat(this.state.photos)).map((item) => {
-		      			return <div>Hello</div>
+		      			return (
+		      				<Card>
+		      					<CardContent>
+		      						<Typography>{item.text}</Typography>
+		      					</CardContent>
+		      				</Card>
+		      			)
 			      	})}
 		      	</div>
 		      </Box>
